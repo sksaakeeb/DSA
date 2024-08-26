@@ -19,7 +19,7 @@ int max = Integer.MIN_VALUE;
                 min = numbers[i];
             }
             if(numbers[i] > max) {
-                max = numbers[i];
+max = numbers[i];
             }
         }
         System.out.println("Max: " + max + " Min: " + min);
