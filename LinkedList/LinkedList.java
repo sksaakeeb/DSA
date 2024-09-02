@@ -87,6 +87,26 @@ public class LinkedList {
         secondLastNode.next = null;
     }
 
+    // reverse linked list (iterate method)
+    public void reverseIterate() {
+        if (head == null || head.next == null) {
+            return;
+        }
+
+        Node prevNode = head;
+        Node currNode = head.next;
+        while (currNode != null) {
+            Node nextNode = currNode.next;
+            currNode.next = prevNode;
+
+            // (updata)
+            prevNode = currNode;
+            currNode = nextNode;
+        }
+        head.next = null;
+        head = prevNode;
+    }
+
     public static void main(String[] args) {
         LinkedList list = new LinkedList();
         list.addFirst("This");
