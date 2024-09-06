@@ -99,7 +99,7 @@ public class LinkedList {
             Node nextNode = currNode.next;
             currNode.next = prevNode;
 
-            // (updata)
+            // (update)
             prevNode = currNode;
             currNode = nextNode;
         }
