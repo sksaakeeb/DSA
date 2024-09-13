@@ -1,7 +1,9 @@
 package BinaryTree;
+import com.sun.source.tree.Tree;
+
 import java.util.*;
 
-public class BinaryTrees {
+public class BinaryTreeQS {
     static class Node {
         int data;
         Node left;
@@ -95,6 +97,89 @@ public class BinaryTrees {
         }
     }
 
+    // count of nodes
+    public static int countNodes(Node root) {
+        if (root == null) {
+            return 0;
+        }
+
+        int leftNodes = countNodes(root.left);
+        int rightNodes = countNodes(root.right);
+
+        return leftNodes + rightNodes + 1;
+    }
+
+    // sum of nodes
+    public static int sumNodes(Node root) {
+        if (root == null) {
+            return 0;
+        }
+
+        int leftSum = sumNodes(root.left);
+        int rightSum = sumNodes(root.right);
+
+        return leftSum + rightSum + root.data;
+    }
+
+    // height of a binary tree
+    public static int heightTree(Node root) {
+        if (root == null) {
+            return 0;
+        }
+
+        int leftHeight = heightTree(root.left);
+        int rightHeight = heightTree(root.right);
+
+        int totalHeight = Math.max(leftHeight, rightHeight) + 1;
+
+        return totalHeight;
+    }
+
+    // diameter of tree --> approach1 O(n^2)
+    public static int diameter1(Node root) {
+        if (root == null) {
+            return 0;
+        }
+
+        int diameter1 = diameter1(root.left);
+        int diameter2 = diameter1(root.right);
+        int diameter3 = heightTree(root.left) + heightTree(root.right) + 1;
+
+        return Math.max(diameter3, Math.max(diameter1, diameter2));
+    }
+
+    // diameter of tree --> approach2 O(n)
+    static class TreeInfo {
+        int height;
+        int diameter;
+
+        TreeInfo(int height, int diameter) {
+            this.height = height;
+            this.diameter = diameter;
+        }
+
+        public static TreeInfo diameter2(Node root) {
+            if (root == null) {
+                return new TreeInfo(0, 0);
+            }
+
+            TreeInfo left = diameter2(root.left);
+            TreeInfo right = diameter2(root.right);
+
+            int totalHeight = Math.max(left.height, right.height) + 1;
+
+            int diameterA = left.diameter;
+            int diameterB = right.diameter;
+            int diameterC = left.height + right.height + 1;
+
+            int totalDiameter = Math.max(Math.max(diameterA, diameterB), diameterC);
+
+            TreeInfo myInfo = new TreeInfo(totalHeight, totalDiameter);
+
+            return myInfo;
+        }
+    }
+
     public static void main(String[] args) {
         int[] nodes = {1, 2, 4, -1, -1, 5, -1, -1, 3, -1, 6, -1, -1};
 
@@ -105,5 +190,9 @@ public class BinaryTrees {
         inOrder(root);
         postOrder(root);
         levelOrder(root);
+        System.out.println("Total no. of nodes: " + countNodes(root));
+        System.out.println("Sum of nodes: " + sumNodes(root));
+        System.out.println("Height of tree: " + heightTree(root));
+        System.out.println("Diameter of tree (Approach-1): " + diameter1(root));
     }
 }
